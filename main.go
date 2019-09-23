@@ -82,6 +82,9 @@ func getNowAndOld() (now BpiRet, old BpiRet) {
 }
 
 func getOld() (old BpiRet) {
+	if _, err := os.Stat(priceFileName); os.IsNotExist(err) {
+		return old
+	}
 	b := getFileContent(priceFileName)
 	err := json.Unmarshal(b, &old)
 	check(err)
